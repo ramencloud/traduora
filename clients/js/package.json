@@ -1,0 +1,11 @@
+{
+  "name": "traduora-client",
+  "version": "0.1.0",
+  "main": "index.js",
+  "devDependencies": {
+    "typescript": "^3.4.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
