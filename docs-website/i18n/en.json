@@ -9,10 +9,6 @@
         "title": "Authentication",
         "sidebar_label": "Authentication"
       },
-      "api/v1/endpoints": {
-        "title": "Endpoints",
-        "sidebar_label": "Endpoints"
-      },
       "api/v1/errors": {
         "title": "Errors",
         "sidebar_label": "Errors"

@@ -1,0 +1,966 @@
+openapi: 3.0.1
+
+info:
+  version: "1.0"
+  title: Traduora API
+  description: |-
+    Documentation for the traduora REST API v1.
+
+    Official website: https://traduora.com  
+    Additional documentation: https://docs.traduora.com  
+    Source code: https://github.com/traduora/traduora  
+
+paths:
+  /api/v1/auth/signup:
+    post:
+      summary: Signup as a new user
+      description: Create a new user account
+      tags:
+      - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+        required: true
+      responses:
+        200:
+          description: "User account created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      accessToken:
+                        type: string
+            
+  /api/v1/auth/token:
+    post:
+      summary: Request a new access token
+      description: Request a new JWT access token
+      tags:
+      - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateRequest'
+        required: true
+      responses:
+        200:
+          description: Successfully authenticated with credentials.
+          content: {}
+  /api/v1/auth/forgot-password:
+    post:
+      summary: Request a reset password email
+      description: Request a reset password email
+      tags:
+      - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+  /api/v1/auth/reset-password:
+    post:
+      summary: Reset password using token sent via email
+      description: Reset password using token sent via email
+      tags:
+      - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+  /api/v1/auth/change-password:
+    post:
+      summary: Change password
+      description: Change password by providing the current one
+      tags:
+      - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+
+  /api/v1/users/me:
+    get:
+      summary: Get the requesting user's info
+      description: Get the requesting user's info
+      tags:
+      - Users
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Update the requesting user's info
+      description: Update the requesting user's info
+      tags:
+      - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDataRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Delete the requesting user's account
+      description: Delete the requesting user's account
+      tags:
+      - Users
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects:
+    get:
+      summary: List all projects
+      description: List all projects for requesting user
+      tags:
+      - Projects
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a new project
+      description: Create a new project
+      tags:
+      - Projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+        required: true
+      responses:
+        201:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}:
+    get:
+      summary: Get project details
+      description: Get a specific project's details
+      tags:
+      - Projects
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Update a project's details
+      description: Update a project's details
+      tags:
+      - Projects
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Delete a project
+      description: Delete a project and all of it's translations
+      tags:
+      - Projects
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/plan:
+    get:
+      summary: Get project plan
+      description: Get project plan
+      tags:
+      - Project Plans
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/users:
+    get:
+      summary: Get project users
+      description: Get project users
+      tags:
+      - Project Users
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    post:
+      summary: Add a new project user
+      description: Add a new project user
+      tags:
+      - Project Users
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProjectUserRequest'
+        required: true
+      responses:
+        201:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/users/{userId}:
+    patch:
+      summary: Update a project user
+      description: Update a project user
+      tags:
+      - Project Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectUserRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Remove a project user
+      description: Remove a project user
+      tags:
+      - Project Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/terms:
+    get:
+      summary: List a project's terms
+      description: List a project's terms
+      tags:
+      - Terms
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a new project term
+      description: Create a new project term
+      tags:
+      - Terms
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTermRequest'
+        required: true
+      responses:
+        201:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/terms/{termId}:
+    patch:
+      summary: Update a project's term
+      description: Update a project's term
+      tags:
+      - Terms
+      parameters:
+      - name: termId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTermRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Delete a project's term
+      description: Delete a project's term
+      tags:
+      - Terms
+      parameters:
+      - name: termId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/translations:
+    get:
+      tags:
+      - Translations
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    post:
+      tags:
+      - Translations
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddLocaleRequest'
+        required: true
+      responses:
+        201:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/translations/{localeCode}:
+    get:
+      tags:
+      - Translations
+      parameters:
+      - name: localeCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Translations
+      parameters:
+      - name: localeCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    patch:
+      tags:
+      - Translations
+      parameters:
+      - name: localeCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTranslationRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/imports:
+    post:
+      tags:
+      - Imports
+      parameters:
+      - name: locale
+        in: query
+        required: true
+        schema:
+          maxLength: 16
+          minLength: 2
+          type: string
+      - name: format
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  description: The file to import
+                  format: binary
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/clients:
+    get:
+      tags:
+      - Project Clients
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    post:
+      tags:
+      - Project Clients
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProjectClientRequest'
+        required: true
+      responses:
+        201:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/clients/{clientId}:
+    delete:
+      tags:
+      - Project Clients
+      parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+    patch:
+      tags:
+      - Project Clients
+      parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectClientRequest'
+        required: true
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/clients/{clientId}/rotate-secret:
+    post:
+      tags:
+      - Project Clients
+      parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/projects/{projectId}/exports:
+    get:
+      tags:
+      - Exports
+      parameters:
+      - name: locale
+        in: query
+        required: true
+        schema:
+          maxLength: 16
+          minLength: 2
+          type: string
+      - name: format
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - csv
+          - xliff12
+          - jsonflat
+          - jsonnested
+          - yamlflat
+          - yamlnested
+          - properties
+          - po
+          - strings
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /api/v1/locales:
+    get:
+      tags:
+      - Locales
+      responses:
+        200:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
+  /health:
+    get:
+      tags:
+        - Misc
+      summary: Check if the API is healthy
+      description: Check the health of the API service.
+      responses:
+        200:
+          description: "The API is healthy"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+components:
+  schemas:
+    ForgotPasswordRequest:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+    CreateProjectRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+    AddLocaleRequest:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          maxLength: 16
+          minLength: 2
+          type: string
+    UpdateProjectUserRequest:
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - admin
+          - editor
+          - viewer
+    AddTermRequest:
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          maxLength: 255
+          minLength: 1
+          type: string
+    SignupRequest:
+      required:
+      - email
+      - name
+      - password
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 8
+          type: string
+        email:
+          type: string
+        password:
+          maxLength: 255
+          minLength: 8
+          type: string
+    UpdateTermRequest:
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          maxLength: 255
+          minLength: 1
+          type: string
+    ChangePasswordRequest:
+      required:
+      - newPassword
+      - oldPassword
+      type: object
+      properties:
+        oldPassword:
+          maxLength: 255
+          minLength: 8
+          type: string
+        newPassword:
+          maxLength: 255
+          minLength: 8
+          type: string
+    AuthenticateRequest:
+      required:
+      - grantType
+      type: object
+      properties:
+        grantType:
+          type: string
+          enum:
+          - password
+          - client_credentials
+        email:
+          type: string
+        password:
+          maxLength: 255
+          minLength: 8
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          maxLength: 255
+          minLength: 8
+          type: string
+    ResetPasswordRequest:
+      required:
+      - email
+      - newPassword
+      - token
+      type: object
+      properties:
+        email:
+          type: string
+        token:
+          type: string
+        newPassword:
+          maxLength: 255
+          minLength: 8
+          type: string
+    UpdateTranslationRequest:
+      required:
+      - termId
+      - value
+      type: object
+      properties:
+        termId:
+          type: string
+        value:
+          maxLength: 8192
+          minLength: 0
+          type: string
+    AddProjectClientRequest:
+      required:
+      - name
+      - role
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        role:
+          type: string
+          enum:
+          - admin
+          - editor
+          - viewer
+    UpdateProjectRequest:
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+    UpdateUserDataRequest:
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 2
+          type: string
+        email:
+          type: string
+    UpdateProjectClientRequest:
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - admin
+          - editor
+          - viewer
+    AddProjectUserRequest:
+      required:
+      - email
+      - role
+      type: object
+      properties:
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+          - admin
+          - editor
+          - viewer
+
+  securitySchemes:
+    BearerAuth:
+      description: |
+        The Authentication token used for secured endpoints.
+        For more info see: https://docs.traduora.com/docs/api/v1/authentication
+      type: apiKey
+      name: Authorization
+      in: header
