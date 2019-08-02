@@ -46,7 +46,7 @@ paths:
   /api/v1/auth/token:
     post:
       summary: Request a new access token
-      description: Request a new JWT access token
+      description: Request a new JWT access token, should be either `password` (with *email* and *password* fields) or `client_credentials` (with *clientId* and *clientSecret* fields).
       tags:
       - Auth
       requestBody:
@@ -441,6 +441,8 @@ paths:
       - BearerAuth: []
   /api/v1/projects/{projectId}/translations:
     get:
+      summary: List the available project translations
+      description: List the available project translations
       tags:
       - Translations
       parameters:
@@ -456,6 +458,8 @@ paths:
       security:
       - BearerAuth: []
     post:
+      summary: Add a new project translation locale
+      description: Add a new project translation locale
       tags:
       - Translations
       parameters:
@@ -478,6 +482,8 @@ paths:
       - BearerAuth: []
   /api/v1/projects/{projectId}/translations/{localeCode}:
     get:
+      summary: Get a project's translation by locale
+      description: Get a project's translation by locale
       tags:
       - Translations
       parameters:
@@ -497,27 +503,9 @@ paths:
           content: {}
       security:
       - BearerAuth: []
-    delete:
-      tags:
-      - Translations
-      parameters:
-      - name: localeCode
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: projectId
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        204:
-          description: ""
-          content: {}
-      security:
-      - BearerAuth: []
     patch:
+      summary: Update a project's translation locale
+      description: Update a project's translation locale
       tags:
       - Translations
       parameters:
@@ -543,8 +531,32 @@ paths:
           content: {}
       security:
       - BearerAuth: []
+    delete:
+      summary: Delete a project's translation locale
+      description: Delete a project's translation locale
+      tags:
+      - Translations
+      parameters:
+      - name: localeCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
   /api/v1/projects/{projectId}/imports:
     post:
+      summary: Import terms and translations for a project
+      description: Import terms and translations for a project
       tags:
       - Imports
       parameters:
@@ -585,6 +597,8 @@ paths:
       - BearerAuth: []
   /api/v1/projects/{projectId}/clients:
     get:
+      summary: List a project's API clients
+      description: List a project's API clients
       tags:
       - Project Clients
       parameters:
@@ -600,6 +614,8 @@ paths:
       security:
       - BearerAuth: []
     post:
+      summary: Create a new API client for a project
+      description: Create a new API client for a project
       tags:
       - Project Clients
       parameters:
@@ -621,27 +637,9 @@ paths:
       security:
       - BearerAuth: []
   /api/v1/projects/{projectId}/clients/{clientId}:
-    delete:
-      tags:
-      - Project Clients
-      parameters:
-      - name: clientId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: projectId
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        204:
-          description: ""
-          content: {}
-      security:
-      - BearerAuth: []
     patch:
+      summary: Update a project's API client
+      description: Update a project's API client
       tags:
       - Project Clients
       parameters:
@@ -667,8 +665,32 @@ paths:
           content: {}
       security:
       - BearerAuth: []
+    delete:
+      summary: Delete a project's API client
+      description: Delete a project's API client
+      tags:
+      - Project Clients
+      parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: ""
+          content: {}
+      security:
+      - BearerAuth: []
   /api/v1/projects/{projectId}/clients/{clientId}/rotate-secret:
     post:
+      summary: Rotate the secret key for a project's API client
+      description: Rotate the secret key for a project's API client
       tags:
       - Project Clients
       parameters:
@@ -690,6 +712,8 @@ paths:
       - BearerAuth: []
   /api/v1/projects/{projectId}/exports:
     get:
+      summary: Export a project's terms and translations
+      description: Export a project's terms and translations
       tags:
       - Exports
       parameters:
@@ -728,6 +752,8 @@ paths:
       - BearerAuth: []
   /api/v1/locales:
     get:
+      summary: List all known locales
+      description: List all known locales
       tags:
       - Locales
       responses:
