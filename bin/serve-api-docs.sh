@@ -4,11 +4,11 @@ set -e
 
 cd docs-website
 
-yarn redoc-cli bundle \
+yarn redoc-cli serve \
     --options.theme.colors.primary.main='#3b84f8' \
     --options.hideHostname=true \
     --options.pathInMiddlePanel=true \
     --options.nativeScrollbars=true \
     --options.hideDownloadButton=true \
-    ../api/doc/swagger.yaml \
-    -o static/docs/api/v1/reference.html
+    --watch \
+    ../api/doc/swagger.yaml
