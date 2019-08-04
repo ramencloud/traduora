@@ -10,5 +10,5 @@ yarn redoc-cli bundle \
     --options.pathInMiddlePanel=true \
     --options.nativeScrollbars=true \
     --options.hideDownloadButton=true \
-    ../api/doc/swagger.yaml \
+    ../api/doc/swagger.json \
     -o static/docs/api/v1/reference.html

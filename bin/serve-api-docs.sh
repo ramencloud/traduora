@@ -11,4 +11,4 @@ yarn redoc-cli serve \
     --options.nativeScrollbars=true \
     --options.hideDownloadButton=true \
     --watch \
-    ../api/doc/swagger.yaml
+    ../api/doc/swagger.json
