@@ -6,7 +6,7 @@ sidebar_label: Overview
 
 The Traduora REST API is available under the `/api/v1/` path. All requests should be served over HTTPS in order to not compromise the authentication tokens.
 
-The API reference is available [here](/docs/api/v1/reference).
+The API endpoint reference is available **[here](/docs/api/v1/reference)**.
 
 ## API resources
 - **User:** an entity used to identify for whom the requests are made.
